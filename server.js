@@ -1,5 +1,6 @@
 import http from 'node:http'
 import {serveStatic} from './utils/serveStatic.js'
+import {handleGet} from './handlers/routeHandlers.js'
 
 const PORT = 8000
 
@@ -10,8 +11,14 @@ const server = http.createServer(async (req, res) => {
     
     // const pathToResource = path.join(__dirname, 'public', 'index.html') // The absolute path +  relative path (the folder + the file we want)
     
-    await serveStatic(req, res, __dirname)
-
+    if (req.url === '/api') {
+        if (req.method === 'GET') {
+            return await handleGet(res)
+        }
+    } else if (!req.url.startsWith('/api')) {
+        await serveStatic(req, res, __dirname)
+    }
+    
 })
 
 
