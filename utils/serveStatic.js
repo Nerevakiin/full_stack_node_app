@@ -1,5 +1,5 @@
 import path from 'node:path'
-import fs from 'node:fs'
+import fs from 'node:fs/promises'
 import { sendResponse } from './sendResponse.js'
 import { getContentType } from './getContentType.js'
 
