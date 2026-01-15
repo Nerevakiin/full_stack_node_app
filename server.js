@@ -1,5 +1,7 @@
 import http from 'node:http'
 import path from 'node:path'
+import fs from 'node:fs/promises'
+import {serveStatic} from './utils/serveStatic.js'
 
 const PORT = 8000
 
@@ -8,17 +10,18 @@ const __dirname = import.meta.dirname
 
 const server = http.createServer(async (req, res) => {
 
-    const absPathToResource = path.join(__dirname, 'public', 'index.html') // The absolute path +  relative path (the folder + the file we want)
-    const relPathToResource = path.join('public', 'index.html')
-    console.log('absolute: ', absPathToResource)
-    console.log('relative: ', relPathToResource)
+    const pathToResource = path.join(__dirname, 'public', 'index.html') // The absolute path +  relative path (the folder + the file we want)
 
 
-
-
+    const content = await fs.readFile(pathToResource, 'utf-8')
+    
+    serveStatic(__dirname)
     res.statusCode = 200
     res.setHeader('Content-Type', 'text/html')
-    res.end('<html><h1>The server is working</h1></html>')
+    res.end(content)
+
+
+
 })
 
 

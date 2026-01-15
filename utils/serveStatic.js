@@ -1,8 +1,7 @@
 import path from 'node:path'
 
-export function testPath() {
 
-  const relPathToResource = path.join('public', 'index.html')
-  console.log(testPath)
-
+export function serveStatic(baseDir){
+    const filePath = path.join(baseDir, 'public', 'index.html')
+    console.log(filePath)
 }
