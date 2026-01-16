@@ -2,6 +2,7 @@ import { getData } from '../utils/getData.js'
 import { parseJSONBody } from '../utils/parseJSONBody.js'
 import { sendResponse } from '../utils/sendResponse.js'
 import { parseJSONBody } from '../utils/parseJSONBody.js'
+// import {addNewSighting} from '../utils/addNewSighting.js'
 
 export async function handleGet(res) {
     const data = await getData()
@@ -11,7 +12,19 @@ export async function handleGet(res) {
 
 export async function handlePost(req, res) {
     console.log('post request received')
+    
+    try {
 
-    const rawBody = await parseJSONBody(req)
+        const parsedBody = await parseJSONBody(req)
+        await addNewSighting(parsedBody)
+        sendResponse(res, 201, 'application/json',JSON.stringify(parsedBody))
+
+    } catch (err) {
+
+        sendResponse(res, 400, 'application/json', JSON.stringify({error: err}))
+
+    }
+
+
     
 }
