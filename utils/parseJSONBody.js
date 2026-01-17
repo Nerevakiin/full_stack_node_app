@@ -2,7 +2,7 @@ export async function parseJSONBody(req) {
 
     let body = ''
 
-    for await (const chunk for req) {
+    for await (const chunk of req) {
         body += chunk
     }
     try {
