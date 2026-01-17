@@ -47,13 +47,10 @@ export async function handleNews(req, res) {
         
         let randomIndex = Math.floor(Math.random() * stories.length) // pick a random story from the array
 
-        res.write(`
-            data: ${JSON.stringify({
-                event: 'news-update',
-                story: stories[randomIndex]
-            })}
-            \n\n`
-        )
+        res.write(`data: ${JSON.stringify({
+            event: 'news-update',
+            story: stories[randomIndex]
+        })}\n\n`)
     }, 3000)
     
 }
