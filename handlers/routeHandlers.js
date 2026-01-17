@@ -20,7 +20,7 @@ export async function handlePost(req, res) {
         const sanitizedBody = sanitizeInput(parsedBody)
         await addNewSighting(sanitizedBody)
 
-        sightingEvents.emit('sighting-added', sanitizedBody)
+        sightingEvents.emit('sighting-added', sanitizedBody) // emit the event
 
         sendResponse(res, 201, 'application/json',JSON.stringify(sanitizedBody))
 
@@ -30,6 +30,28 @@ export async function handlePost(req, res) {
 
     }
 
+}
 
+
+export async function handleNews(req, res) {
+    res.statusCode = 200
+
+    // setting the appropriate headers (for the server event streams)
+
+    res.setHeader('Content-Type', 'text/event-stream')
+    res.setHeader('Cache-Control', 'no-cache')
+    res.setHeader('Connection', 'keep-alive')
+
+    setInterval(() => {
+        let randomIndex = Math.floor(Math.random() * stories.length)
+
+        res.write(`
+            data: ${JSON.stringify({
+                event: 'news-update',
+                story: stories[randomIndex]
+            })}
+            \n\n`
+        )
+    }, 3000)
     
 }
