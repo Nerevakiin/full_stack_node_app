@@ -13,6 +13,7 @@ export async function addNewSighting(newSighting){
 
         await fs.writeFile(pathJSON, JSON.stringify(sightings, null, 2), 'utf8')
     
+    
     } catch (err) {
         throw new Error(err)
     }

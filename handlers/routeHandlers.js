@@ -4,6 +4,7 @@ import { parseJSONBody } from '../utils/parseJSONBody.js'
 import {addNewSighting} from '../utils/addNewSighting.js'
 import { sanitizeInput } from '../utils/sanitizeInput.js'
 import { sightingEvents } from '../events/sightingEvents.js'
+import { stories } from '../data/stories.js'
 
 export async function handleGet(res) {
     const data = await getData()
@@ -43,7 +44,8 @@ export async function handleNews(req, res) {
     res.setHeader('Connection', 'keep-alive')
 
     setInterval(() => {
-        let randomIndex = Math.floor(Math.random() * stories.length)
+        
+        let randomIndex = Math.floor(Math.random() * stories.length) // pick a random story from the array
 
         res.write(`
             data: ${JSON.stringify({
